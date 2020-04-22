@@ -1,17 +1,22 @@
 
 "use strict";
 
-// [0-9] === \d
-// ^\d{11}$ --- means only: 12345678901.  !not: abc12345678901 or abc12345678901jnm;   
-// Select all inputs for validation
-var inputs = document.querySelectorAll('input'); // Validation scrip here:
+var inputs = document.querySelectorAll('input');
 
 var patterns = {
   telephone: /^\d{11}$/
-}; // attach keyup events to inputs
+}; 
 
-inputs.forEach(function (input) {
-  input.addEventListener('keyup', function (e) {
-    console.log(e.target.attributes.name.value);
+function validate(field, regex) {
+  if(regex.test(field.value)) {
+    field.className = 'Valid';
+  } else {
+    field.className = 'invalid';
+  }
+}
+
+inputs.forEach((input) => {
+  input.addEventListener('keyup', (e) => {
+    validate(e.target, patterns[e.target.attributes.name.value]);
   });
 });
